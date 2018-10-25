@@ -1,5 +1,7 @@
 package com.danielshimon.android_project.model.entities;
 
+import android.media.Image;
+
 public class Driver
 {
     long   id;
