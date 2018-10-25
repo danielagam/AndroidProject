@@ -1,10 +1,12 @@
 package com.danielshimon.android_project;
 
+import android.app.TimePickerDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.danielshimon.android_project.model.entities.Driver;
@@ -12,9 +14,13 @@ import com.danielshimon.android_project.model.entities.Travel;
 
 import java.sql.Time;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
+
     private EditText name1;
     private Button btn;
+
+    int hour, minute;
+    int hourFinal, minuteFinal;
 
     Travel travel = new Travel();
 
@@ -26,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         travel.setClientName(findViewById(R.id.name).toString());
         travel.setClientEmail(findViewById(R.id.mailClient).toString());
         travel.setClientNumber(findViewById(R.id.numberClient).toString());
-        travel.setStratDrving(Time.valueOf(findViewById(R.id.startDriving).toString()));
+        //travel.setStratDrving(Time.valueOf(findViewById(R.id.startDriving).toString()));
 
         btn = findViewById(R.id.btn);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -37,6 +43,11 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
     }
 }
