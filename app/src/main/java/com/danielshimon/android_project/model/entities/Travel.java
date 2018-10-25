@@ -1,16 +1,19 @@
+package com.danielshimon.android_project.model.entities;
+
+import com.danielshimon.android_project.model.entities.Drivingstatus;
+
 import java.sql.Time;
-import java.util.Date;
 
 public class Travel {
     Drivingstatus drivingStatus;
     Position current;
     Position destination;
-    Time stratDrving;
-    Time endDriving;
-    String clientName;
-    String clientNumber;
-    String clientEmail;
-    //region getter and setter
+    Time          stratDrving;
+    Time          endDriving;
+    String        clientName;
+    String        clientNumber;
+    String        clientEmail;
+   //region getter and setter
     public Drivingstatus getDrivingStatus() {
         return drivingStatus;
     }

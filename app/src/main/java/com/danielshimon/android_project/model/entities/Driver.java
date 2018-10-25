@@ -1,3 +1,5 @@
+package com.danielshimon.android_project.model.entities;
+
 public class Driver
 {
     long   id;
