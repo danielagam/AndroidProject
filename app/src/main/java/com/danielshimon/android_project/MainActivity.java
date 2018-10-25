@@ -9,18 +9,13 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.danielshimon.android_project.model.entities.Driver;
 import com.danielshimon.android_project.model.entities.Travel;
 
-import java.sql.Time;
+public class MainActivity extends AppCompatActivity {
 
-public class MainActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
-
-    private EditText name1;
+    private EditText editText;
     private Button btn;
-
-    int hour, minute;
-    int hourFinal, minuteFinal;
+    private EditText chooseTime;
 
     Travel travel = new Travel();
 
@@ -28,6 +23,20 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        chooseTime = findViewById(R.id.startDrivingRequest);
+        chooseTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(MainActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
+                        chooseTime.setText(hourOfDay + ":" + minutes);
+                    }
+                }, 0, 0, false);
+                timePickerDialog.show();
+            }
+        });
 
         travel.setClientName(findViewById(R.id.name).toString());
         travel.setClientEmail(findViewById(R.id.mailClient).toString());
@@ -38,16 +47,10 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), name1.getText().toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), editText.getText().toString(), Toast.LENGTH_LONG).show();
 
 
             }
         });
-
-    }
-
-    @Override
-    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
     }
 }
