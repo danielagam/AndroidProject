@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:gravity="center_horizontal"
+    android:orientation="vertical"
 
     tools:context=".MainActivity">
 
     <EditText
         android:id="@+id/name"
         android:layout_width="match_parent"
-        android:layout_marginHorizontal="100px"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="100px"
         android:layout_marginVertical="35px"
         android:hint="הכנס שם מלא"
         android:inputType="text" />
@@ -21,26 +21,29 @@
     <EditText
         android:id="@+id/mailClient"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="100px"
-        android:layout_marginVertical="35px"        android:layout_height="wrap_content"
+        android:layout_marginVertical="35px"
         android:hint="הכנס כתובת מייל"
         android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/numberClient"
         android:layout_width="match_parent"
-        android:layout_marginHorizontal="100px"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="100px"
         android:layout_marginVertical="35px"
         android:hint="                                       הכנס מספר פלאפון"
         android:inputType="phone" />
 
 
     <EditText
-        android:id="@+id/startDriving"
+        android:id="@+id/startDrivingRequest"
         android:layout_width="match_parent"
-        android:layout_marginHorizontal="100px"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginHorizontal="100px"
         android:layout_marginVertical="35px"
         android:hint="הכנס זמן נסיעה רצוי"
         android:inputType="time" />
@@ -48,10 +51,10 @@
 
     <Button
         android:id="@+id/btn"
-        android:text="הזמן נסיעה"
         android:layout_width="match_parent"
-        android:layout_marginHorizontal="100px"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="35px" />
+        android:layout_marginHorizontal="100px"
+        android:layout_marginVertical="35px"
+        android:text="הזמן נסיעה" />
 
 </android.support.v7.widget.LinearLayoutCompat>
