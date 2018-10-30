@@ -32,9 +32,11 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="100px"
         android:layout_marginVertical="35px"
-        android:hint="                                       הכנס מספר פלאפון"
+        android:hint="הכנס מספר פלאפון"
+        android:textAlignment="textEnd"
         android:maxLength="10"
-        android:inputType="phone" />
+        android:inputType="phone"
+        android:gravity="end" />
 
 
     <EditText
