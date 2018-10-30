@@ -1,7 +1,5 @@
 package com.danielshimon.android_project.model.entities;
 
-import com.danielshimon.android_project.model.entities.Drivingstatus;
-
 import java.sql.Time;
 
 public class Travel {

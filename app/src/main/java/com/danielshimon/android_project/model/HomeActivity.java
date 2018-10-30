@@ -1,11 +1,6 @@
-package com.danielshimon.android_project;
+package com.danielshimon.android_project.model;
 
-import android.content.Intent;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
-import com.danielshimon.android_project.model.entities.MainActivity;
 
 public class HomeActivity extends AppCompatActivity {
 
