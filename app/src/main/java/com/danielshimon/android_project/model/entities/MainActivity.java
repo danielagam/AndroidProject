@@ -1,6 +1,7 @@
-package com.danielshimon.android_project;
-
+package com.danielshimon.android_project.model.entities;
 import android.app.TimePickerDialog;
+import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,11 +9,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
+import com.danielshimon.android_project.HomeActivity;
 
-import com.danielshimon.android_project.model.entities.Travel;
+
+import com.danielshimon.android_project.R;
 
 public class MainActivity extends AppCompatActivity {
-
     private EditText editText;
     private Button btn;
     private EditText chooseTime;
@@ -21,9 +23,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         chooseTime = findViewById(R.id.startDrivingRequest);
         chooseTime.setOnClickListener(new View.OnClickListener() {
             @Override
