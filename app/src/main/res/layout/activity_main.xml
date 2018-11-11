@@ -7,14 +7,13 @@
     android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".model.MainActivity">
-
     <EditText
         android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="100px"
         android:layout_marginVertical="35px"
-        android:hint="הכנס שם מלא"
+        android:hint="נא להכניס שם מלא"
         android:inputType="text" />
 
     <EditText
@@ -23,22 +22,19 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="100px"
         android:layout_marginVertical="35px"
-        android:hint="הכנס כתובת מייל"
+        android:hint="נא להכניס כתובת מייל"
         android:inputType="textEmailAddress" />
-
     <EditText
         android:id="@+id/numberClient"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="100px"
         android:layout_marginVertical="35px"
-        android:hint="הכנס מספר פלאפון"
+        android:hint="נא להכניס מספר פלאפון"
         android:textAlignment="textEnd"
         android:maxLength="10"
         android:inputType="phone"
         android:gravity="end" />
-
-
     <EditText
         android:id="@+id/startDrivingRequest"
         android:layout_width="match_parent"
@@ -47,16 +43,32 @@
         android:layout_centerVertical="true"
         android:layout_marginHorizontal="100px"
         android:layout_marginVertical="35px"
-        android:hint="הכנס זמן נסיעה רצוי"
+        android:hint="נא להכניס זמן נסיעה רצוי"
         android:inputType="time" />
+    <EditText
+        android:id="@+id/MyLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="100px"
+        android:layout_marginVertical="35px"
+        android:hint="הכתובת שלי"
+        android:inputType="text" />
 
-
+    <EditText
+        android:id="@+id/destinationDrivingRequest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginHorizontal="100px"
+        android:layout_marginVertical="35px"
+        android:hint="נא להכניס יעד נסיעה"
+        android:inputType="time" />
     <Button
-        android:id="@+id/btn"
+        android:id="@+id/orderbtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="100px"
         android:layout_marginVertical="35px"
         android:text="הזמן נסיעה" />
-
 </android.support.v7.widget.LinearLayoutCompat>

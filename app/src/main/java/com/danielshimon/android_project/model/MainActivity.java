@@ -20,7 +20,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import com.danielshimon.android_project.R;
 import com.danielshimon.android_project.model.entities.Travel;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -88,22 +87,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void getLocation1() {
-
-        //     Check the SDK version and whether the permission is already granted or not.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 5);
-
-        } else {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-        }
-
-    }
-
-    private void getLocation() {
-
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,15 +111,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         travel.setClientEmail(findViewById(R.id.mailClient).toString());
         travel.setClientNumber(findViewById(R.id.numberClient).toString());
         client = LocationServices.getFusedLocationProviderClient(this);
-        findViews();
+        startDrivingRequest = (EditText) findViewById(R.id.startDrivingRequest);
+        startDrivingRequest.setOnFocusChangeListener(this);
         requestPermission();
     }
 
-    private void findViews() {
-        startDrivingRequest = (EditText) findViewById(R.id.startDrivingRequest);
-        startDrivingRequest.setOnFocusChangeListener(this);
-
-    }
     private void requestPermission(){
         ActivityCompat.requestPermissions(this,new String[]{ Manifest.permission.ACCESS_FINE_LOCATION},1);
 }
@@ -163,4 +142,3 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 }
-
