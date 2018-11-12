@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView locationTextView;
     private TextView startDrivingRequest;
     private FusedLocationProviderClient client;
+    private static  int numberOfTravel = 0;
     Travel travel = new Travel();
     LocationManager locationManager;
     LocationListener locationListener;
@@ -107,23 +108,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 timePickerDialog.show();
             }
         });
-        travel.setClientName(findViewById(R.id.name).toString());
+        travel.setClientName(String.valueOf(findViewById(R.id.name)));
         travel.setClientEmail(findViewById(R.id.mailClient).toString());
         travel.setClientNumber(findViewById(R.id.numberClient).toString());
         client = LocationServices.getFusedLocationProviderClient(this);
         startDrivingRequest = (EditText) findViewById(R.id.startDrivingRequest);
         startDrivingRequest.setOnFocusChangeListener(this);
+        Button orderButton = (Button)findViewById(R.id.orderbtn);
+        orderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference("Travel number: " + numberOfTravel++);
+                myRef.setValue(travel);
+            }
+        });
         requestPermission();
     }
 
     private void requestPermission(){
         ActivityCompat.requestPermissions(this,new String[]{ Manifest.permission.ACCESS_FINE_LOCATION},1);
 }
-
-    @Override
-    public void onClick(View v) {
-        //  TODO request to DB
-    }
 
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
@@ -140,5 +145,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Travel number: " + numberOfTravel++);
+        myRef.setValue(travel);
     }
 }
