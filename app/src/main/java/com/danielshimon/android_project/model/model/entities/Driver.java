@@ -1,6 +1,4 @@
-package com.danielshimon.android_project.model.entities;
-
-import android.media.Image;
+package com.danielshimon.android_project.model.model.entities;
 
 public class Driver
 {

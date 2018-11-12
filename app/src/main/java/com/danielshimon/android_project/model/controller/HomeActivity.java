@@ -1,4 +1,4 @@
-package com.danielshimon.android_project.model;
+package com.danielshimon.android_project.model.controller;
 
 import android.support.v7.app.AppCompatActivity;
 

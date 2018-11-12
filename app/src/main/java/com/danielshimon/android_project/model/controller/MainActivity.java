@@ -1,4 +1,4 @@
-package com.danielshimon.android_project.model;
+package com.danielshimon.android_project.model.controller;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -10,7 +10,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Build;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -20,8 +20,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
 import com.danielshimon.android_project.R;
-import com.danielshimon.android_project.model.entities.Travel;
+import com.danielshimon.android_project.model.model.backend.Backend;
+import com.danielshimon.android_project.model.model.backend.BackendFactory;
+import com.danielshimon.android_project.model.model.entities.Travel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -35,26 +38,13 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener {
 
-    private EditText editText;
-    private Button orderBtn;
     private EditText chooseTime;
     private TextView locationTextView;
     private TextView startDrivingRequest;
     private FusedLocationProviderClient client;
-    private static  int numberOfTravel = 0;
     Travel travel = new Travel();
     LocationManager locationManager;
     LocationListener locationListener;
-
-    void getInstance() {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
-        HashMap<String, Object> hashMap = new HashMap();
-        hashMap.put("key-1", "value 1 ");
-        hashMap.put("key-2", "value 2 ");
-        hashMap.put("key-3", "value 3 ");
-        myRef.setValue(hashMap);
-    }
 
     public String getPlace(Location location) {
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
@@ -62,10 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         try {
             addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
             if (addresses.size() > 0) {
-                String cityName = addresses.get(0).getAddressLine(0);
-                String stateName = addresses.get(0).getAddressLine(1);
-                String countryName = addresses.get(0).getAddressLine(2);
-                return cityName;
+                return addresses.get(0).getAddressLine(0);
             }
             return "no place: \n (" + location.getLongitude() + " , " + location.getLatitude() + ")";
         } catch (
@@ -91,8 +78,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        //getInstance()
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         chooseTime = findViewById(R.id.startDrivingRequest);
@@ -114,21 +99,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         client = LocationServices.getFusedLocationProviderClient(this);
         startDrivingRequest = (EditText) findViewById(R.id.startDrivingRequest);
         startDrivingRequest.setOnFocusChangeListener(this);
-        Button orderButton = (Button)findViewById(R.id.orderbtn);
-        orderButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference("Travel number: " + numberOfTravel++);
-                myRef.setValue(travel);
-            }
-        });
+        Button orderButton = (Button) findViewById(R.id.orderbtn);
+        orderButton.setOnClickListener(this);
         requestPermission();
     }
 
-    private void requestPermission(){
-        ActivityCompat.requestPermissions(this,new String[]{ Manifest.permission.ACCESS_FINE_LOCATION},1);
-}
+    private void requestPermission() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+    }
 
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
@@ -138,8 +116,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         client.getLastLocation().addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
-                if (location!=null){
-                    TextView myLocation=findViewById(R.id.MyLocation);
+                if (location != null) {
+                    TextView myLocation = findViewById(R.id.MyLocation);
                     myLocation.setText(getPlace(location));
                 }
             }
@@ -147,10 +125,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    @SuppressLint("StaticFieldLeak")
     @Override
     public void onClick(View v) {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Travel number: " + numberOfTravel++);
-        myRef.setValue(travel);
+        final Backend backend = BackendFactory.getBackend();
+        new AsyncTask<Context, Void, Void>() {
+
+            @Override
+            protected Void doInBackground(Context... contexts) {
+                backend.addRequest(travel, contexts[0]);
+                return null;
+            }
+        }.execute(this);
     }
 }
