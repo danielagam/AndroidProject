@@ -15,7 +15,6 @@
         android:layout_marginVertical="35px"
         android:hint="נא להכניס שם מלא"
         android:inputType="text" />
-
     <EditText
         android:id="@+id/mailClient"
         android:layout_width="match_parent"
@@ -53,7 +52,6 @@
         android:layout_marginVertical="35px"
         android:hint="הכתובת שלי"
         android:inputType="text" />
-
     <EditText
         android:id="@+id/destinationDrivingRequest"
         android:layout_width="match_parent"
@@ -63,7 +61,7 @@
         android:layout_marginHorizontal="100px"
         android:layout_marginVertical="35px"
         android:hint="נא להכניס יעד נסיעה"
-        android:inputType="time" />
+        android:inputType="text" />
     <Button
         android:id="@+id/orderbtn"
         android:layout_width="match_parent"
