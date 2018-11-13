@@ -30,6 +30,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.IOException;
+import java.sql.Time;
 import java.util.List;
 import java.util.Locale;
 
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Location locationTarget = new Location("Location");
     Location locationCurrent = null;
     private Button orderBtn;
-    private Button ourrecommendation;
+    private Button ourRecommendation;
     private EditText chooseTime;
     private TextView locationTextView;
     private TextView startDrivingRequest;
@@ -118,6 +119,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        EditText current = findViewById(R.id.name);
+        travel.setClientName(current.getText().toString());
+        current = findViewById(R.id.mailClient);
+        travel.setClientEmail(current.getText().toString());
+        current = findViewById(R.id.numberClient);
+        travel.setClientNumber(current.getText().toString());
+
         final Backend backend = BackendFactory.getBackend();
         new AsyncTask<Context, Void, Void>() {
 
@@ -169,10 +177,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 timePickerDialog.show();
             }
         });
-        String name = new String(findViewById(R.id.name).toString());
-        travel.setClientName(name);
-        travel.setClientEmail(findViewById(R.id.mailClient).toString());
-        travel.setClientNumber(findViewById(R.id.numberClient).toString());
+
         client = LocationServices.getFusedLocationProviderClient(this);
         startDrivingRequest = (EditText) findViewById(R.id.startDrivingRequest);
         startDrivingRequest.setOnFocusChangeListener(this);
