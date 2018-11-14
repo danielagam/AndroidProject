@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -12,15 +13,16 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import com.danielshimon.android_project.R;
 import com.danielshimon.android_project.model.model.backend.Backend;
 import com.danielshimon.android_project.model.model.backend.BackendFactory;
@@ -33,6 +35,7 @@ import java.io.IOException;
 import java.sql.Time;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener {
     //region init variable
@@ -46,12 +49,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView locationTextView;
     private TextView startDrivingRequest;
     private TextView destDrivingRequest;
+    private EditText emailInput;
     private FusedLocationProviderClient client;
     Travel travel = new Travel();
     LocationManager locationManager;
     LocationListener locationListener;
     //endregion
-
     public String getPlace(Location location) {
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         List<Address> addresses = null;
@@ -104,7 +107,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return false;
         }
     }
-
+    private boolean validEmail() {
+        String emailValid = emailInput.getText().toString().trim();
+      if(!emailValid.isEmpty()) {
+          if (!Patterns.EMAIL_ADDRESS.matcher(emailValid).matches()) {
+              emailInput.setError("מייל לא תקין");
+              emailInput.setTextColor(-65536);
+              return false;
+          }
+      }
+        emailInput.setError(null);
+        emailInput.setTextColor(Color.parseColor("#000000"));
+        return true;
+    }
     private void calcTravel() {
         //need to complex the calac
         try {
@@ -116,38 +131,52 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
-
     @Override
     public void onClick(View v) {
-        EditText current = findViewById(R.id.name);
-        travel.setClientName(current.getText().toString());
-        current = findViewById(R.id.mailClient);
-        travel.setClientEmail(current.getText().toString());
-        current = findViewById(R.id.numberClient);
-        travel.setClientNumber(current.getText().toString());
-        destDrivingRequest = (TextView) findViewById(R.id.destinationDrivingRequest);
-        if (findLocationFromAdress(destDrivingRequest.getText().toString())) {
-            calcTravel();
-            openDialog();
-        }
-        travel.setCurrent(locationCurrent);
-        travel.setDestination(locationTarget);
-        //current = findViewById(R.id.startDrivingRequest);
-        //travel.setStratDrving((current.getText().toString()));
-        final Backend backend = BackendFactory.getBackend();
-        new AsyncTask<Context, Void, Void>() {
-
-            @Override
-            protected Void doInBackground(Context... contexts) {
-                backend.addRequest(travel, contexts[0]);
-                return null;
+        try {
+            EditText name = findViewById(R.id.name);
+            travel.setClientName(name.getText().toString());
+            travel.setClientEmail(emailInput.getText().toString());
+            EditText number = findViewById(R.id.numberClient);
+            travel.setClientNumber(number.getText().toString());
+            destDrivingRequest = (TextView) findViewById(R.id.destinationDrivingRequest);
+            if (findLocationFromAdress(destDrivingRequest.getText().toString())) {
+                calcTravel();
             }
-        }.execute(this);
+            travel.setCurrent(locationCurrent);
+            travel.setDestination(locationTarget);
+            //current = findViewById(R.id.startDrivingRequest);
+            //travel.setStratDrving((current.getText().toString()));
+            if (validEmail()&&name.getText().toString()!=""&&number.getText().toString()!="") {
+                final Backend backend = BackendFactory.getBackend();
+                new AsyncTask<Context, Void, Void>() {
+
+                    @Override
+                    protected Void doInBackground(Context... contexts) {
+                        backend.addRequest(travel, contexts[0]);
+                        openDialog();
+                        return null;
+
+                    }
+                }.execute(this);
+            } else {
+                Toast.makeText(getApplicationContext(), "נא למלא את הפרטים החסרים",
+                        Toast.LENGTH_SHORT).show();
+
+            }
+        }
+        catch (Exception e)
+        {
+
+        }
 
     }
 
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
+        if(v==emailInput){
+        validEmail();
+        }
         if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
@@ -169,6 +198,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         chooseTime = findViewById(R.id.startDrivingRequest);
+        emailInput = findViewById(R.id.mailClient);
+        EditText name=findViewById(R.id.name);
         chooseTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -181,12 +212,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 timePickerDialog.show();
             }
         });
-
         client = LocationServices.getFusedLocationProviderClient(this);
         startDrivingRequest = (EditText) findViewById(R.id.startDrivingRequest);
-        startDrivingRequest.setOnFocusChangeListener(this);
+        onFocusChange(emailInput,true);
+        emailInput.setOnFocusChangeListener(this);
         orderBtn = (Button) findViewById(R.id.orderbtn);
         orderBtn.setOnClickListener(this);
         requestPermission();
+        validEmail();
     }
+
 }
