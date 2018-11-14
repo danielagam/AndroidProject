@@ -143,11 +143,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (findLocationFromAdress(destDrivingRequest.getText().toString())) {
                 calcTravel();
             }
+            String checkName=name.getText().toString();
+            String checkNumber=number.getText().toString();
             travel.setCurrent(locationCurrent);
             travel.setDestination(locationTarget);
             //current = findViewById(R.id.startDrivingRequest);
             //travel.setStratDrving((current.getText().toString()));
-            if (validEmail()&&name.getText().toString()!=""&&number.getText().toString()!="") {
+            if (validEmail()&&!checkName.isEmpty()&&!checkNumber.isEmpty()) {
                 final Backend backend = BackendFactory.getBackend();
                 new AsyncTask<Context, Void, Void>() {
 
