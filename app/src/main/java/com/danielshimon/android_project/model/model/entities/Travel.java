@@ -1,13 +1,12 @@
 package com.danielshimon.android_project.model.model.entities;
 
-import java.sql.Time;
-
+import android.location.Location;
 public class Travel {
     Drivingstatus drivingStatus;
-    Position current;
-    Position destination;
-    Time          stratDrving;
-    Time          endDriving;
+    Location      current;
+    Location      destination;
+    String        stratDrving;
+    String        endDriving;
     String        clientName;
     String        clientNumber;
     String        clientEmail;
@@ -20,35 +19,35 @@ public class Travel {
         this.drivingStatus = drivingStatus;
     }
 
-    public Position getCurrent() {
+    public Location getCurrent() {
         return current;
     }
 
-    public void setCurrent(Position current) {
+    public void setCurrent(Location current) {
         this.current = current;
     }
 
-    public Position getDestination() {
+    public Location getDestination() {
         return destination;
     }
 
-    public void setDestination(Position destination) {
+    public void setDestination(Location destination) {
         this.destination = destination;
     }
 
-    public Time getStratDrving() {
+    public String getStratDrving() {
         return stratDrving;
     }
 
-    public void setStratDrving(Time stratDrving) {
+    public void setStratDrving(String stratDrving) {
         this.stratDrving = stratDrving;
     }
 
-    public Time getEndDriving() {
+    public String getEndDriving() {
         return endDriving;
     }
 
-    public void setEndDriving(Time endDriving) {
+    public void setEndDriving(String endDriving) {
         this.endDriving = endDriving;
     }
 

@@ -30,6 +30,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.IOException;
+import java.sql.Time;
 import java.util.List;
 import java.util.Locale;
 
@@ -124,7 +125,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         travel.setClientEmail(current.getText().toString());
         current = findViewById(R.id.numberClient);
         travel.setClientNumber(current.getText().toString());
-
+        destDrivingRequest = (TextView) findViewById(R.id.destinationDrivingRequest);
+        if (findLocationFromAdress(destDrivingRequest.getText().toString())) {
+            calcTravel();
+            openDialog();
+        }
+        travel.setCurrent(locationCurrent);
+        travel.setDestination(locationTarget);
+        //current = findViewById(R.id.startDrivingRequest);
+        //travel.setStratDrving((current.getText().toString()));
         final Backend backend = BackendFactory.getBackend();
         new AsyncTask<Context, Void, Void>() {
 
@@ -134,11 +143,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return null;
             }
         }.execute(this);
-        destDrivingRequest = (TextView) findViewById(R.id.destinationDrivingRequest);
-        if (findLocationFromAdress(destDrivingRequest.getText().toString())) {
-            calcTravel();
-            openDialog();
-        }
+
     }
 
     @Override
