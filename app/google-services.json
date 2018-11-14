@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "124658066998",
+    "firebase_url": "https://mydbapplication-15c5e.firebaseio.com",
+    "project_id": "mydbapplication-15c5e",
+    "storage_bucket": "mydbapplication-15c5e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:124658066998:android:647ef9924bfc8ea7",
+        "android_client_info": {
+          "package_name": "com.danielshimon.android_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "124658066998-dsda621q6jfgegkl5jabkgv3gb0ajo0o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.danielshimon.android_project",
+            "certificate_hash": "3d0cd9e1c19368b9aaa2db5cbfd6a4906c3334b0"
+          }
+        },
+        {
+          "client_id": "124658066998-frnprm1pemoqot08co7l8m80ku07o2jn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.danielshimon.android_project",
+            "certificate_hash": "83d3f214ea0934f4917fd9e75cef573868b3dbeb"
+          }
+        },
+        {
+          "client_id": "124658066998-3b2vt1v50at4pad1m7m46u2fqgs60rt9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1sCCFyXQwfn-pZqTUwzchMVD1vOWkL3U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "124658066998-3b2vt1v50at4pad1m7m46u2fqgs60rt9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
