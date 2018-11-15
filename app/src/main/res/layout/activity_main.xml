@@ -4,93 +4,103 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/taxibackground"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:background="@drawable/splashstart"
     tools:context=".model.controller.MainActivity">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginTop="40dp"
-            android:layout_height="match_parent">
+            android:orientation="vertical">
+
             <EditText
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:layout_gravity="center"
                 android:layout_marginHorizontal="100px"
                 android:layout_marginVertical="20dp"
-                android:hint="נא להכניס שם מלא"
                 android:background="@drawable/rounded_edittext"
+                android:hint="נא להכניס שם מלא"
                 android:inputType="text" />
+
             <EditText
                 android:id="@+id/numberClient"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:layout_gravity="center"
                 android:layout_marginHorizontal="100px"
                 android:layout_marginVertical="20dp"
+                android:background="@drawable/rounded_edittext"
                 android:gravity="start"
                 android:hint="נא להכניס מספר פלאפון"
-                android:background="@drawable/rounded_edittext"
-
                 android:inputType="phone"
-                android:maxLength="10"/>
+                android:maxLength="10" />
+
             <EditText
                 android:id="@+id/mailClient"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:layout_gravity="center"
                 android:layout_marginHorizontal="100px"
                 android:layout_marginVertical="20dp"
-                android:hint="נא להכניס כתובת מייל"
                 android:background="@drawable/rounded_edittext"
-
+                android:hint="נא להכניס כתובת מייל"
                 android:inputType="textEmailAddress" />
+
             <EditText
                 android:id="@+id/startDrivingRequest"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
+                android:layout_gravity="center"
                 android:layout_marginHorizontal="100px"
                 android:layout_marginVertical="20dp"
                 android:background="@drawable/rounded_edittext"
                 android:hint="נא להכניס זמן נסיעה רצוי"
                 android:inputType="time" />
+
             <EditText
                 android:id="@+id/MyLocation"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:layout_gravity="center"
                 android:layout_marginHorizontal="100px"
                 android:layout_marginVertical="20dp"
                 android:background="@drawable/rounded_edittext"
-
+                android:drawableLeft="@drawable/mapico"
                 android:hint="הכתובת שלי"
-                android:inputType="text"
-                android:drawableLeft="@drawable/mapico"/>
+                android:inputType="text" />
+
             <EditText
                 android:id="@+id/destinationDrivingRequest"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
+                android:layout_gravity="center"
                 android:layout_marginHorizontal="100px"
                 android:layout_marginVertical="20dp"
                 android:background="@drawable/rounded_edittext"
-
+                android:drawableLeft="@drawable/mapico"
                 android:hint="נא להכניס יעד נסיעה"
-                android:inputType="text"
-                android:drawableLeft="@drawable/mapico"/>
+                android:inputType="text" />
 
             <Button
                 android:id="@+id/orderbtn"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginHorizontal="100px"
                 android:layout_marginVertical="20dp"
                 android:background="@drawable/rounded_button"
-                android:layout_gravity="center"
                 android:text="הזמן נסיעה" />
         </LinearLayout>
     </ScrollView>
