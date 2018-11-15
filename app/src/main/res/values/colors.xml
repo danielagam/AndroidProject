@@ -4,6 +4,10 @@
     <color name="colorPrimaryDark">#dbbb00</color>
     <color name="colorAccent">#CDDC39</color>
     <color name="orange">#f5a11a</color>
-    <color name="yellow">#FDD835</color>
-    <color name="deepYellow">#fff700</color>
+    <color name="yellow">#FFEB3B</color>
+    <color name="deepOrenge">#FFF3E0</color>
+    <color name="blugray">#78909C</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
 </resources>
