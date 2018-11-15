@@ -9,8 +9,11 @@
 
     <ImageView
         android:id="@+id/imgSplash"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
 
-        android:src="@drawable/splashstart" />
+        android:adjustViewBounds="true"
+        android:gravity="center"
+        android:scaleType="fitXY"
+        android:src="@drawable/taxisplash" />
 </RelativeLayout>
