@@ -150,8 +150,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             travel.setClientEmail(emailInput.getText().toString());
             EditText number = findViewById(R.id.numberClient);
             travel.setClientNumber(number.getText().toString());
-            destDrivingRequest = (TextView) findViewById(R.id.destinationDrivingRequest);
-            if (findLocationFromAdress(destDrivingRequest.getText().toString())) {
+            if(locationTarget!=null&&locationCurrent!=null) {
                 calcTravel();
             }
             String checkName = name.getText().toString();
@@ -223,6 +222,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         destLocation.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
+                locationTarget.setAltitude(place.getLatLng().latitude);
+                locationTarget.setLongitude(place.getLatLng().longitude);
+
                 //TODO take the place
             }
 
