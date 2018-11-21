@@ -98,6 +98,16 @@
                 android:hint="נא להכניס יעד נסיעה"
                 android:inputType="text" />
 
+            <fragment
+                android:id="@+id/place_autocomplete_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:layout_marginHorizontal="100px"
+                android:layout_marginVertical="20dp"
+                android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+                />
+
             <Button
                 android:id="@+id/orderbtn"
                 android:layout_width="150dp"

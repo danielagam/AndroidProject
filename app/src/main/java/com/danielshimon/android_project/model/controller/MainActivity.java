@@ -12,8 +12,11 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Patterns;
 import android.view.View;
@@ -27,8 +30,12 @@ import com.danielshimon.android_project.R;
 import com.danielshimon.android_project.model.model.backend.Backend;
 import com.danielshimon.android_project.model.model.backend.BackendFactory;
 import com.danielshimon.android_project.model.model.entities.Travel;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.IOException;
@@ -50,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView destDrivingRequest;
     private EditText emailInput;
     private FusedLocationProviderClient client;
+    private PlaceAutocompleteFragment destLocation;
     Travel travel = new Travel();
     LocationManager locationManager;
     LocationListener locationListener;
@@ -196,6 +204,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -203,6 +212,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         chooseTime = findViewById(R.id.startDrivingRequest);
         emailInput = findViewById(R.id.mailClient);
         EditText name = findViewById(R.id.name);
+        destLocation = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+
+        destLocation.setHint("נא להכניס יעד נסיעה");
+        destLocation.getView().setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.rounded_edittext));
+
+
+
+        destLocation.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                //TODO take the place
+            }
+
+            @Override
+            public void onError(Status status) { }
+        });
+
         chooseTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
