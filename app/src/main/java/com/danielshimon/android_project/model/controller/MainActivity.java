@@ -14,6 +14,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -29,6 +30,7 @@ import android.widget.Toast;
 import com.danielshimon.android_project.R;
 import com.danielshimon.android_project.model.model.backend.Backend;
 import com.danielshimon.android_project.model.model.backend.BackendFactory;
+import com.danielshimon.android_project.model.model.entities.Drivingstatus;
 import com.danielshimon.android_project.model.model.entities.Travel;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -39,9 +41,15 @@ import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import static com.danielshimon.android_project.model.model.entities.Drivingstatus.FREE;
+
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener {
     //region init variable
     private static int SPLASH_TIME_OUT = 3500;
@@ -61,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Travel travel = new Travel();
     LocationManager locationManager;
     LocationListener locationListener;
-
+    LocalDateTime ldt = LocalDateTime.now();
     //endregion
     public String getPlace(Location location) {
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
@@ -76,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 IOException e) {
             e.printStackTrace();
         }
-        return "IOException ...";
+        return "אין מיקום זמין כרגע";
     }
 
     @SuppressLint("MissingPermission")
@@ -142,6 +150,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onClick(View v) {
         try {
@@ -157,8 +166,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String checkNumber = number.getText().toString();
             travel.setCurrent(locationCurrent);
             travel.setDestination(locationTarget);
-            //current = findViewById(R.id.startDrivingRequest);
-            //travel.setStratDrving((current.getText().toString()));
+            travel.setDrivingStatus(Drivingstatus.FREE);
+            travel.setStratDrving(DateTimeFormatter.ofPattern("dd-MM-yyyy").format(ldt) +" "+ chooseTime.getText().toString());
             if (validEmail() && !checkName.isEmpty() && !checkNumber.isEmpty()) {
                 final Backend backend = BackendFactory.getBackend();
                 new AsyncTask<Context, Void, Void>() {
@@ -211,27 +220,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         chooseTime = findViewById(R.id.startDrivingRequest);
         emailInput = findViewById(R.id.mailClient);
         EditText name = findViewById(R.id.name);
-        destLocation = (PlaceAutocompleteFragment)
-                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
-
+        destLocation = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
         destLocation.setHint("נא להכניס יעד נסיעה");
         destLocation.getView().setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.rounded_edittext));
-
-
-
         destLocation.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
                 locationTarget.setAltitude(place.getLatLng().latitude);
                 locationTarget.setLongitude(place.getLatLng().longitude);
-
-                //TODO take the place
-            }
+                }
 
             @Override
             public void onError(Status status) { }
         });
-
         chooseTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
