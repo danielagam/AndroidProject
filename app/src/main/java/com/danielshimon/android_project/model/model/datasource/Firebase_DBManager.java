@@ -1,6 +1,4 @@
 package com.danielshimon.android_project.model.model.datasource;
-
-
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
@@ -12,8 +10,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-
 /**
  * FireBase manager this app just need to write data
  */
@@ -24,10 +20,8 @@ public class Firebase_DBManager implements Backend {
         //this throw NullPointerException
         f.hashCode();
     }
-
     //the database reference
     private DatabaseReference clientsRef = FirebaseDatabase.getInstance().getReference("clients");
-
     //the write function
     public void addRequest(Travel travel, final Context context) {
         clientsRef.push().setValue(travel).addOnSuccessListener(new OnSuccessListener() {

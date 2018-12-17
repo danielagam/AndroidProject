@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 // Permission is granted
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
             } else {
-                Toast.makeText(this, "Until you grant the permission, we canot display the location", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "נא לאפשר גישה למיקום", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -104,10 +104,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
     }
 
-    public void openDialog() {
-        PriceDialog priceDialog = new PriceDialog();
-        priceDialog.show(getSupportFragmentManager(), "בדיקה");
-    }
+//    public void openDialog() {
+//        PriceDialog priceDialog = new PriceDialog();
+//        priceDialog.show(getSupportFragmentManager(), "סיכום הזמנה");
+//    }
 
     private boolean findLocationFromAdress(String destDrivingRequest) {
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     protected Void doInBackground(Context... contexts) {
                         backend.addRequest(travel, contexts[0]);
-                        openDialog();
+                        //openDialog();
                         return null;
 
                     }
@@ -254,5 +254,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         requestPermission();
         validEmail();
     }
-
 }
