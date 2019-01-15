@@ -7,9 +7,11 @@ public class Travel {
     Location      destination;
     String        stratDrving;
     String        endDriving;
+    String        dateTravel;
     String        clientName;
     String        clientNumber;
     String        clientEmail;
+
    //region getter and setter
     public Drivingstatus getDrivingStatus() {
         return drivingStatus;
@@ -18,7 +20,13 @@ public class Travel {
     public void setDrivingStatus(Drivingstatus drivingStatus) {
         this.drivingStatus = drivingStatus;
     }
+    public String getDateTravel() {
+        return dateTravel;
+    }
 
+    public void setDateTravel(String dateTravel) {
+        this.dateTravel = dateTravel;
+    }
     public Location getCurrent() {
         return current;
     }

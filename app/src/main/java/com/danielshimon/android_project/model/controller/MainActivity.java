@@ -1,5 +1,5 @@
 package com.danielshimon.android_project.model.controller;
-
+import java.time.LocalDate;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
@@ -14,7 +14,6 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -26,7 +25,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import com.danielshimon.android_project.R;
 import com.danielshimon.android_project.model.model.backend.Backend;
 import com.danielshimon.android_project.model.model.backend.BackendFactory;
@@ -41,35 +39,35 @@ import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
 import static com.danielshimon.android_project.model.model.entities.Drivingstatus.FREE;
-
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener {
     //region init variable
+    Date date = new Date();
     private static int SPLASH_TIME_OUT = 3500;
     double price;
     String longDrive;
+    String Saddress;
+    String Daddress;
     Location locationTarget = new Location("Location");
     Location locationCurrent = null;
     private Button orderBtn;
-    private Button ourRecommendation;
     private EditText chooseTime;
-    private TextView locationTextView;
     private TextView startDrivingRequest;
-    private TextView destDrivingRequest;
     private EditText emailInput;
     private FusedLocationProviderClient client;
     private PlaceAutocompleteFragment destLocation;
     Travel travel = new Travel();
     LocationManager locationManager;
     LocationListener locationListener;
-    LocalDateTime ldt = LocalDateTime.now();
     //endregion
     public String getPlace(Location location) {
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
@@ -77,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         try {
             addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
             if (addresses.size() > 0) {
+                Saddress=addresses.get(0).getAddressLine(0);
                 return addresses.get(0).getAddressLine(0);
             }
             return "אין מיקום זמין כרגע \n";
@@ -86,7 +85,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         return "אין מיקום זמין כרגע";
     }
-
     @SuppressLint("MissingPermission")
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -108,7 +106,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        PriceDialog priceDialog = new PriceDialog();
 //        priceDialog.show(getSupportFragmentManager(), "סיכום הזמנה");
 //    }
-
     private boolean findLocationFromAdress(String destDrivingRequest) {
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         try {
@@ -167,7 +164,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             travel.setCurrent(locationCurrent);
             travel.setDestination(locationTarget);
             travel.setDrivingStatus(Drivingstatus.FREE);
-            travel.setStratDrving(DateTimeFormatter.ofPattern("dd-MM-yyyy").format(ldt) +" "+ chooseTime.getText().toString());
+            travel.setDateTravel(chooseTime.getText().toString());
+            travel.setEndDriving(Daddress);
+            travel.setStratDrving(Saddress);
             if (validEmail() && !checkName.isEmpty() && !checkNumber.isEmpty()) {
                 final Backend backend = BackendFactory.getBackend();
                 new AsyncTask<Context, Void, Void>() {
@@ -226,6 +225,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         destLocation.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
+                Daddress=place.getAddress().toString();
                 locationTarget.setAltitude(place.getLatLng().latitude);
                 locationTarget.setLongitude(place.getLatLng().longitude);
                 }
